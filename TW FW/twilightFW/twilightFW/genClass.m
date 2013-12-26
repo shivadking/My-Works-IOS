@@ -53,6 +53,7 @@ NSCharacterSet *nonNumberSet;
     
 }
 
+
 #pragma mark - Plists
 +(NSString*) getPlistPathfromfileManager:(NSString*) fileName fileType:(NSString*) filetype
 {
@@ -359,6 +360,98 @@ NSCharacterSet *nonNumberSet;
 }
 
 #pragma mark - Conversions
+- (NSString *)formatString:(NSString *)string {  // 9,999,999
+    // Strip out the commas that may already be here:
+    NSString *newString = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
+    if ([newString length] == 0) {
+        return nil;
+    }
+    
+    // Check for illegal characters
+    NSCharacterSet *disallowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
+    NSRange charRange = [newString rangeOfCharacterFromSet:disallowedCharacters];
+    if ( charRange.location != NSNotFound) {
+        return nil;
+    }
+    
+    // Split the string into the integer and decimal portions
+    NSArray *numberArray = [newString componentsSeparatedByString:@"."];
+    if ([numberArray count] > 2) {
+        // There is more than one decimal point
+        return nil;
+    }
+    
+    // Get the integer
+    NSString *integer           = [numberArray objectAtIndex:0];
+    NSUInteger integerDigits    = [integer length];
+    if (integerDigits == 0) {
+        return nil;
+    }
+    
+    // Format the integer.
+    // You can do this by first converting to a number and then back to a string,
+    // but I would rather keep it as a string instead of doing the double conversion.
+    // If performance is critical, I would convert this to a C string to do the formatting.
+    NSMutableString *formattedString = [[NSMutableString alloc] init];
+    if (integerDigits < 4) {
+        [formattedString appendString:integer];
+    } else {
+        // integer is 4 or more digits
+        NSUInteger startingDigits = integerDigits % 3;
+        if (startingDigits == 0) {
+            startingDigits = 3;
+        }
+        [formattedString setString:[integer substringToIndex:startingDigits]];
+        for (NSUInteger index = startingDigits; index < integerDigits; index = index + 3) {
+            [formattedString appendFormat:@",%@", [integer substringWithRange:NSMakeRange(index, 3)]];
+        }
+    }
+    
+    // Add the decimal portion if there
+    if ([numberArray count] == 2) {
+        [formattedString appendString:@"."];
+        NSString *decimal = [numberArray objectAtIndex:1];
+        if ([decimal length] > 0) {
+            [formattedString appendString:decimal];
+        }
+    }
+    
+    return formattedString;
+}
+-(NSString*) formatPhoneNumber:(NSString*) simpleNumber deleteLastChar:(BOOL)deleteLastChar {  // (123) 456-7891
+    if(simpleNumber.length==0) return @"";
+    // use regex to remove non-digits(including spaces) so we are left with just the numbers
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[\\s-\\(\\)]" options:NSRegularExpressionCaseInsensitive error:&error];
+    simpleNumber = [regex stringByReplacingMatchesInString:simpleNumber options:0 range:NSMakeRange(0, [simpleNumber length]) withTemplate:@""];
+    
+    // check if the number is to long
+    if(simpleNumber.length>10) {
+        // remove last extra chars.
+        simpleNumber = [simpleNumber substringToIndex:10];
+    }
+    
+    if(deleteLastChar) {
+        // should we delete the last digit?
+        simpleNumber = [simpleNumber substringToIndex:[simpleNumber length] - 1];
+    }
+    
+    // 123 456 7890
+    // format the number.. if it's less then 7 digits.. then use this regex.
+    if(simpleNumber.length<7)
+        simpleNumber = [simpleNumber stringByReplacingOccurrencesOfString:@"(\\d{3})(\\d+)"
+                                                               withString:@"($1) $2"
+                                                                  options:NSRegularExpressionSearch
+                                                                    range:NSMakeRange(0, [simpleNumber length])];
+    
+    else   // else do this one..
+        simpleNumber = [simpleNumber stringByReplacingOccurrencesOfString:@"(\\d{3})(\\d{3})(\\d+)"
+                                                               withString:@"($1) $2-$3"
+                                                                  options:NSRegularExpressionSearch
+                                                                    range:NSMakeRange(0, [simpleNumber length])];
+    return simpleNumber;
+}
+
 -(NSString*)convertDictionaryJsonString:(NSDictionary*) dic
 {
     //NSDictionary *myDictionary = [NSDictionary dictionaryWithObject:@"hai" forKey:@"keys"];
