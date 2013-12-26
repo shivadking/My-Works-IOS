@@ -358,5 +358,81 @@ NSCharacterSet *nonNumberSet;
     return 0;
 }
 
+#pragma mark - Conversions
+-(NSString*)convertDictionaryJsonString:(NSDictionary*) dic
+{
+    //NSDictionary *myDictionary = [NSDictionary dictionaryWithObject:@"hai" forKey:@"keys"];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:nil];
+    if (!jsonData) {
+        //NSLog(@&quot;JSON error: %@&quot;, error);
+    } else {
+        NSString *JSONString = [[NSString alloc] initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
+        NSLog(@"JSON OUTPUT: %@",JSONString);
+        return JSONString;
+    }
+    return NULL;
+}
+
++(UIImage *)resizeImage:(UIImage *)imageToCompress scaledToSize:(CGSize)newSize {
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [imageToCompress drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    const CGFloat margin = 2.0f;
+    CGSize size = CGSizeMake([newImage size].width + 2*margin, [newImage size].height + 2*margin);
+    UIGraphicsBeginImageContext(size);
+    
+    [[UIColor whiteColor] setFill];
+    [[UIBezierPath bezierPathWithRect:CGRectMake(0, 0, size.width, size.height)] fill];
+    
+    CGRect rect = CGRectMake(margin, margin, size.width-2*margin, size.height-2*margin);
+    [newImage drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
+    
+    UIImage *testImg =  UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return testImg;
+}
+
+#pragma mark - Map Common
++(NSMutableArray*)getLatLongfromAddress : (NSString *)addressText {
+    
+    //addressText = here send Address  like as @"Jaipur Rajasthan"
+    
+    NSString *stringAdress = [addressText stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    
+    NSString *esc_addr =  [stringAdress stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
+    
+    NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:req] encoding:NSUTF8StringEncoding error:NULL];
+    
+    NSMutableDictionary *data = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding]options:NSJSONReadingMutableContainers error:nil];
+    
+    NSMutableArray *dataArray = (NSMutableArray *)[data valueForKey:@"results" ];
+    
+    if (dataArray.count == 0) {
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please Enter a valid address" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }else{
+        
+        for (id firstTime in dataArray) {
+            NSString *jsonStr1 = [firstTime valueForKey:@"geometry"];
+            NSMutableArray *Location = [jsonStr1 valueForKey:@"location"];
+            NSString *latitude = [Location  valueForKey:@"lat"];
+            NSLog(@"Data Return %@",latitude);
+            return Location;
+            
+        }
+    }
+    return nil;
+    
+}
+
+
 
 @end
