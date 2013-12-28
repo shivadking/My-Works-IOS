@@ -67,8 +67,6 @@ NSMutableString *currentElement;
     // also serves to clear it
     _responseData = [[NSMutableData alloc] init];
     
-    NSLog(@"res  ==> %@",_responseData);
-    
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -88,7 +86,6 @@ NSMutableString *currentElement;
     // You can parse the stuff in your instance variable now
     
     NSXMLParser *parser=[[NSXMLParser alloc] initWithData:_responseData];
-    NSLog(@"parser => %@",parser);
     [parser setDelegate:self];
     [parser parse];
 }
@@ -123,7 +120,7 @@ NSMutableString *currentElement;
 {
     [currentElement appendString:string];
     
-    NSLog(@"curElement => %@",currentElement);
+    
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
@@ -134,6 +131,7 @@ NSMutableString *currentElement;
 }
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
+    NSLog(@"curElement => %@",currentElement);
 }
 
 @end
