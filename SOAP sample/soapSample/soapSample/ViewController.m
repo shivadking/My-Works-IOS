@@ -55,6 +55,8 @@
     //Setting parameters section ends
     
     NSURLConnection *conn=[[NSURLConnection alloc]initWithRequest:request delegate:self ];
+    
+    NSLog(@"con End => Endended");
 }
 
 NSMutableData *_responseData;
