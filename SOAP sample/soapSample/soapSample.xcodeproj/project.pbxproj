@@ -18,6 +18,8 @@
 		139C311C186EA44200CA2EB1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 139C311B186EA44200CA2EB1 /* Default-568h@2x.png */; };
 		139C311F186EA44200CA2EB1 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 139C311D186EA44200CA2EB1 /* MainStoryboard.storyboard */; };
 		139C3122186EA44300CA2EB1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 139C3121186EA44300CA2EB1 /* ViewController.m */; };
+		139C315D186EBB0200CA2EB1 /* soapXMLparser.m in Sources */ = {isa = PBXBuildFile; fileRef = 139C315C186EBB0200CA2EB1 /* soapXMLparser.m */; };
+		139C3160186EBD4E00CA2EB1 /* webService.m in Sources */ = {isa = PBXBuildFile; fileRef = 139C315F186EBD4E00CA2EB1 /* webService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,10 @@
 		139C311E186EA44200CA2EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		139C3120186EA44200CA2EB1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		139C3121186EA44300CA2EB1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		139C315B186EBB0200CA2EB1 /* soapXMLparser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soapXMLparser.h; sourceTree = "<group>"; };
+		139C315C186EBB0200CA2EB1 /* soapXMLparser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soapXMLparser.m; sourceTree = "<group>"; };
+		139C315E186EBD4E00CA2EB1 /* webService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webService.h; sourceTree = "<group>"; };
+		139C315F186EBD4E00CA2EB1 /* webService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = webService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +94,10 @@
 				139C311D186EA44200CA2EB1 /* MainStoryboard.storyboard */,
 				139C3120186EA44200CA2EB1 /* ViewController.h */,
 				139C3121186EA44300CA2EB1 /* ViewController.m */,
+				139C315E186EBD4E00CA2EB1 /* webService.h */,
+				139C315F186EBD4E00CA2EB1 /* webService.m */,
+				139C315B186EBB0200CA2EB1 /* soapXMLparser.h */,
+				139C315C186EBB0200CA2EB1 /* soapXMLparser.m */,
 				139C310C186EA44200CA2EB1 /* Supporting Files */,
 			);
 			path = soapSample;
@@ -176,6 +186,8 @@
 				139C3112186EA44200CA2EB1 /* main.m in Sources */,
 				139C3116186EA44200CA2EB1 /* AppDelegate.m in Sources */,
 				139C3122186EA44300CA2EB1 /* ViewController.m in Sources */,
+				139C315D186EBB0200CA2EB1 /* soapXMLparser.m in Sources */,
+				139C3160186EBD4E00CA2EB1 /* webService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "soapXMLparser.h"
 
 @interface ViewController ()
 
@@ -85,9 +86,13 @@ NSMutableString *currentElement;
     // The request is complete and data has been received
     // You can parse the stuff in your instance variable now
     
-    NSXMLParser *parser=[[NSXMLParser alloc] initWithData:_responseData];
+    /*NSXMLParser *parser=[[NSXMLParser alloc] initWithData:_responseData];
     [parser setDelegate:self];
-    [parser parse];
+    [parser parse];*/
+    
+    soapXMLparser *soap = [[soapXMLparser alloc] init];
+    currentElement = [soap xmlParsingFunctions:_responseData];
+    NSLog(@"fromParser curEl => %@",currentElement);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -103,7 +108,7 @@ NSMutableString *currentElement;
 }
 
 
-- (void)parserDidStartDocument:(NSXMLParser *)parser
+/*- (void)parserDidStartDocument:(NSXMLParser *)parser
 {
     NSLog(@"Parser start");
 }
@@ -132,6 +137,6 @@ NSMutableString *currentElement;
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
     NSLog(@"curElement => %@",currentElement);
-}
+}*/
 
 @end
