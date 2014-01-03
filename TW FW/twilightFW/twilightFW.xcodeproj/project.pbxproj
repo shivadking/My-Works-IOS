@@ -41,6 +41,7 @@
 		134A6FE118696D2C00F24273 /* genClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = genClass.h; sourceTree = "<group>"; };
 		134A6FE218696D2C00F24273 /* genClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = genClass.m; sourceTree = "<group>"; };
 		134A6FE41869D64E00F24273 /* defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defs.h; sourceTree = "<group>"; };
+		139C3161186ECF6A00CA2EB1 /* defnitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defnitions.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				134A6FE41869D64E00F24273 /* defs.h */,
+				139C3161186ECF6A00CA2EB1 /* defnitions.h */,
 				134A6FE118696D2C00F24273 /* genClass.h */,
 				134A6FE218696D2C00F24273 /* genClass.m */,
 			);
@@ -316,6 +318,7 @@
 				134A6FDE18696C5500F24273 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

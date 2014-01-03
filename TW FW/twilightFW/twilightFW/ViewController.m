@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "defnitions.h"
 
 @interface ViewController ()
 
@@ -25,6 +26,10 @@
     [genClass getCommon];
     [genClass makeTost:self.view withMessage:@"Sample Toast MSG"] ;
     [genClass print];
+    
+    allocUserDefault;
+    setUserDefault(@"hai", @"k");
+    NSLog(@"String => %@",getUserDefault(@"k"));
 }
 
 - (void)didReceiveMemoryWarning
